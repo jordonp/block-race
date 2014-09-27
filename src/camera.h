@@ -10,5 +10,6 @@ public:
 	camera();
 	~camera();
 	glm::mat4 get_view();
+	float get_fov();
 };
 #endif

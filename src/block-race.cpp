@@ -4,15 +4,18 @@
 #include "level.h"
 #include "game_object.h"
 #include "camera.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 void game(renderer& r) {
     
     // Disable the cursor
     // SDL_ShowCursor(SDL_DISABLE);
 
+    float cam_height = 20.0f;
+
     game_object* player;
     level l;
-    l.view.set_position(0.0f, 0.0f, 20.0f);
+    l.view.set_position(0.0f, 0.0f, cam_height);
     //l.view.set_orientation(230.0f, 1.0f, 0.0f, 0.0f);
 
     game_object& cube = l.new_game_object();
@@ -46,11 +49,12 @@ void game(renderer& r) {
     bool quit = false;
     enum DOWN_KEYS {W_DOWN, A_DOWN, S_DOWN, D_DOWN };
     bool key_down[4] = {false};
-    // int center_x, center_y;
-    // r.get_render_size(center_x, center_y);
-    // center_x /= 2;
-    // center_y /= 2;
+    int center_x, center_y;
+    r.get_render_size(center_x, center_y);
+    center_x /= 2;
+    center_y /= 2;
     glm::vec3 current_position;
+    glm::vec3 mouse;
 
     while ( !quit ) {      
         while( SDL_PollEvent( &event ) ){
@@ -85,14 +89,17 @@ void game(renderer& r) {
 
                 // get the vector from the players current position
                 current_position = player->get_position();
+
+                mouse.x = event.motion.x / (float)center_x - 1.0f;
+                mouse.y = event.motion.y / (float)center_y - 1.0f;
+
+                mouse =  glm::vec3(cam_height + 2.0f, 1.0f/l.view.get_fov() * -(cam_height + 2.0f), 1.0f) * mouse;
                 
                 std::cout << "CUR_POS (X, Z): " << current_position.x << ", " << current_position.y << std::endl;
-                std::cout << "Mouse Position (X, Y): " << event.motion.x << ", " << event.motion.y << std::endl;
+                std::cout << "Mouse Position (X, Y): "<< event.motion.x << ", "<< event.motion.y << ", " << mouse.x << ", " << mouse.y << std::endl;
                 std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.y - event.motion.y << std::endl;
 
-                player->move(
-                    current_position.x - event.motion.x,
-                    current_position.y - event.motion.y, 0.0f);
+                player->set_position(mouse.x, mouse.y, 0.0f);
                 
                 // player->yaw((center_x - event.motion.x)/10.0f);
                 // player->pitch(-(center_y - event.motion.y)/10.0f);
@@ -116,14 +123,14 @@ void game(renderer& r) {
         current_position = player->get_position();
 
         //boundaries
-        if(current_position.x > 20.0f)
-            player->set_x(20.0f);
-        if(current_position.x < -20.0f)
-            player->set_x(-20.0f);
-        if(current_position.y > 12.0f)
-            player->set_y(12.0f);
-        if(current_position.y < -12.0f)
-            player->set_y(-12.0f);
+        // if(current_position.x > 20.0f)
+        //     player->set_x(20.0f);
+        // if(current_position.x < -20.0f)
+        //     player->set_x(-20.0f);
+        // if(current_position.y > 12.0f)
+        //     player->set_y(12.0f);
+        // if(current_position.y < -12.0f)
+        //     player->set_y(-12.0f);
 
 
         // Stop mouse from going outside of the window
