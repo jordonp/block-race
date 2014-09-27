@@ -6,7 +6,9 @@
 #include "camera.h"
 
 void game(renderer& r) {
-    SDL_ShowCursor(SDL_DISABLE);
+    
+    // Disable the cursor
+    // SDL_ShowCursor(SDL_DISABLE);
 
     game_object* player;
     level l;
@@ -18,9 +20,10 @@ void game(renderer& r) {
     player = &cube;
 
 
+    // Ground
     {
         game_object& ground = l.new_game_object();
-        ground.set_position(0, -1, 0);
+        ground.set_position(0, -1, 0); // one below player
         ground.set_scale(100, 1, 100);
         ground.set_colour(0, 0.6, 0);
 
@@ -87,6 +90,7 @@ void game(renderer& r) {
             }
         }
 
+
         if ( key_down[W_DOWN])
             player->move_forward(0.2f);
         if ( key_down[A_DOWN] )
@@ -95,9 +99,12 @@ void game(renderer& r) {
             player->move_backward(0.2f);
         if ( key_down[D_DOWN] )
             player->move_right(0.2f);
+        
+        // get the vector from the players current position
 
-        //stop mouse from going outside of the window
-        SDL_WarpMouseInWindow(r.get_window(), center_x, center_y);
+
+        // Stop mouse from going outside of the window
+        // SDL_WarpMouseInWindow(r.get_window(), center_x, center_y);
 
         r.render();
     }
