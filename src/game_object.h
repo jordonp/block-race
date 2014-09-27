@@ -27,7 +27,7 @@ protected:
 	bounding_box bounds;
 public:
 	model geometry;
-	game_object() : x(0), y(0), z(0), last_x(0), last_y(0), last_z(0), scale_x(1.0f), scale_y(1.0f), scale_z(1.0f), rotation(1.0f) {}
+	game_object();
 	virtual ~game_object();
 	glm::mat4 get_matrix();
 	glm::vec3 get_position();

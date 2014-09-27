@@ -10,7 +10,7 @@ uniform vec3 colour;
 varying vec3 v_normal;
 varying vec3 v_pos;
 
-vec3 light_pos = vec3(0.0f, 10.0f, 0.0f);
+vec3 light_pos = vec3(0.0f, 0.0f, 10.0f);
 vec3 light_col = vec3(1.0f, 1.0f, 1.0f);
 
 void main(void) {

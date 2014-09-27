@@ -1,6 +1,10 @@
 #include "game_object.h"
 #include "glm/gtc/matrix_transform.hpp"
 
+game_object::game_object() : x(0.0f), y(0.0f), z(0.0f), last_x(0.0f), last_y(0.0f), last_z(0.0f), scale_x(1.0f), scale_y(1.0f), scale_z(1.0f), rotation(1.0f) {
+
+}
+
 game_object::~game_object() {
 
 }
@@ -46,7 +50,7 @@ void game_object::set_scale(float x_scale, float y_scale, float z_scale) {
 }
 
 void game_object::set_orientation(float angle, float axis_x, float axis_y, float axis_z) {
-	rotation = glm::mat3(glm::rotate(glm::mat4(1.0f), angle, glm::vec3(axis_x, axis_y, axis_z)));
+	rotation = glm::mat3(glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(axis_x, axis_y, axis_z)));
 }
 
 glm::vec3 game_object::move(float x_amount, float y_amount, float z_amount) {
@@ -60,7 +64,7 @@ glm::vec3 game_object::move(float x_amount, float y_amount, float z_amount) {
 }
 
 glm::vec3 game_object::move_forward(float amount) {
-	glm::vec3 move_amount = glm::vec3(rotation * glm::vec3(0.0f, 0.0f, -amount));
+	glm::vec3 move_amount = glm::vec3(rotation * glm::vec3(0.0f, amount, 0.0f));
 	return move(move_amount.x, move_amount.y, move_amount.z);
 }
 
@@ -81,7 +85,7 @@ glm::vec3 game_object::move_right(float amount) {
 }
 
 glm::mat3 game_object::rotate(float angle, float axis_x, float axis_y, float axis_z) {
-	rotation = glm::mat3(glm::rotate(glm::mat4(1.0f), angle, glm::vec3(axis_x, axis_y, axis_z))) * rotation;
+	rotation = glm::mat3(glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(axis_x, axis_y, axis_z))) * rotation;
 	return rotation;
 }
 
