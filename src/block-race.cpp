@@ -50,6 +50,7 @@ void game(renderer& r) {
     r.get_render_size(center_x, center_y);
     center_x /= 2;
     center_y /= 2;
+    glm::vec3 current_position;
 
     while ( !quit ) {      
         while( SDL_PollEvent( &event ) ){
@@ -83,12 +84,13 @@ void game(renderer& r) {
              case SDL_MOUSEMOTION:
 
                 // get the vector from the players current position
-                glm::vec3 current_position;
                 current_position = player->get_position();
                 
+                std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.z - event.motion.z;
+
                 player->move(
                     current_position.x - event.motion.x,
-                    current_position.y - event.motion.y, 0.0f);
+                    current_position.z - event.motion.z, 0.0f);
                 
                 // player->yaw((center_x - event.motion.x)/10.0f);
                 // player->pitch(-(center_y - event.motion.y)/10.0f);
