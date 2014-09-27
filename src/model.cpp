@@ -1,6 +1,7 @@
 #include "model.h"
 #include "renderer.h"
 #include "glm/gtc/type_ptr.hpp"
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,14 +19,14 @@ model::model() : vbo_vertices(0), vbo_normals(0) {
 				glm::vec3( 0.5, 0.5,-0.5), glm::vec3( 0.5,-0.5,-0.5), glm::vec3(-0.5,-0.5,-0.5),
 				glm::vec3( 0.5, 0.5,-0.5), glm::vec3(-0.5,-0.5,-0.5), glm::vec3(-0.5, 0.5,-0.5)};
 
-	compute_normals();
-
 	triangle_groups.emplace_back();
 
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		triangle_groups.back().triangles.push_back(i);
 	}
+
+	compute_normals();
 }
 
 model::~model() {
