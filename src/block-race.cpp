@@ -86,11 +86,11 @@ void game(renderer& r) {
                 // get the vector from the players current position
                 current_position = player->get_position();
                 
-                std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.z - event.motion.z;
+                std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.z - event.motion.y;
 
                 player->move(
                     current_position.x - event.motion.x,
-                    current_position.z - event.motion.z, 0.0f);
+                    current_position.z - event.motion.y, 0.0f);
                 
                 // player->yaw((center_x - event.motion.x)/10.0f);
                 // player->pitch(-(center_y - event.motion.y)/10.0f);
