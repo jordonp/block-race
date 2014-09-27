@@ -81,6 +81,15 @@ void game(renderer& r) {
                 }
                 break;
              case SDL_MOUSEMOTION:
+
+                // get the vector from the players current position
+                glm::vec3 current_position;
+                current_positon = player->get_position();
+                
+                player->move(
+                    current_positon.x - event.motion.x,
+                    current_positon.y - event.motion.y, 0.0f);
+                
                 // player->yaw((center_x - event.motion.x)/10.0f);
                 // player->pitch(-(center_y - event.motion.y)/10.0f);
                 break;
@@ -99,9 +108,6 @@ void game(renderer& r) {
             player->move_backward(0.2f);
         if ( key_down[D_DOWN] )
             player->move_right(0.2f);
-        
-        // get the vector from the players current position
-
 
         // Stop mouse from going outside of the window
         // SDL_WarpMouseInWindow(r.get_window(), center_x, center_y);
