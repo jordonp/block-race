@@ -19,7 +19,7 @@ void main(void) {
     v_normal = normalize(minv * normal);
     v_pos = vec3(m * vec4(position, 1.0));
     gl_Position = mvp * vec4(position, 1.0);
-};
+}
 
 
 );
