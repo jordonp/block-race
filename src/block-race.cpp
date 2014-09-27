@@ -10,14 +10,12 @@ void game(renderer& r) {
 
     game_object* player;
     level l;
-
-    player = &l.view;
-    l.view.set_position(-5.0f, 0.0f, 10.0f);
-    l.view.set_orientation(-40.0f, 0.0f, 1.0f, 0.0f);
+    l.view.set_position(0.0f, 20.0f, 0.0f);
+    l.view.set_orientation(270.0f, 1.0f, 0.0f, 0.0f);
 
     game_object& cube = l.new_game_object();
     cube.set_colour(1.0f, 0.0f, 0.0f);
-    //player = &cube;
+    player = &cube;
 
 
     {
@@ -80,8 +78,8 @@ void game(renderer& r) {
                 }
                 break;
              case SDL_MOUSEMOTION:
-                player->yaw((center_x - event.motion.x)/10.0f);
-                player->pitch(-(center_y - event.motion.y)/10.0f);
+                // player->yaw((center_x - event.motion.x)/10.0f);
+                // player->pitch(-(center_y - event.motion.y)/10.0f);
                 break;
              case SDL_QUIT:
                 quit = true;
