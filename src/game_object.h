@@ -30,6 +30,7 @@ public:
 	game_object() : x(0), y(0), z(0), last_x(0), last_y(0), last_z(0), scale_x(1.0f), scale_y(1.0f), scale_z(1.0f), rotation(1.0f) {}
 	virtual ~game_object();
 	glm::mat4 get_matrix();
+	glm::vec3 get_position();
 	void set_x(float new_x);
 	void set_y(float new_y);
 	void set_z(float new_z);

@@ -11,6 +11,10 @@ glm::mat4 game_object::get_matrix() {
 		   glm::scale(glm::mat4(1.0f), glm::vec3(scale_x, scale_y, scale_z)) * glm::mat4(1.0f);
 }
 
+glm::vec3 get_position() {
+	return glm::vec3(x, y, z);
+}
+
 void game_object::set_x(float new_x) {
 	last_x = x;
 	x = new_x;
