@@ -99,6 +99,9 @@ renderer::renderer() : current_level(NULL), render_width(1280), render_height(80
     }
     glEnable(GL_DEPTH_TEST);
     glUseProgram(program);
+
+    glClearColor ( 0.0, 0.0, 0.0, 1.0 );
+    glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 renderer::~renderer() {
@@ -114,7 +117,6 @@ void renderer::set_level(level& level) {
 }
 
 void renderer::render() {
-	glClearColor ( 0.0, 0.0, 0.0, 1.0 );
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if(current_level)

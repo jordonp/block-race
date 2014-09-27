@@ -54,7 +54,8 @@ void game(renderer& r) {
     center_x /= 2;
     center_y /= 2;
     glm::vec3 current_position;
-    glm::vec3 mouse;
+    glm::vec4 mouse;
+
 
     while ( !quit ) {      
         while( SDL_PollEvent( &event ) ){
@@ -89,14 +90,17 @@ void game(renderer& r) {
 
                 // get the vector from the players current position
                 current_position = player->get_position();
-
+                mouse = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
                 mouse.x = event.motion.x / (float)center_x - 1.0f;
-                mouse.y = event.motion.y / (float)center_y - 1.0f;
+                mouse.y = (event.motion.y / (float)center_y - 1.0f) * -1.0f;
+                glReadPixels(event.motion.x, event.motion.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &mouse.z);
 
-                mouse =  glm::vec3(cam_height + 2.0f, 1.0f/l.view.get_fov() * -(cam_height + 2.0f), 1.0f) * mouse;
+                mouse =  l.view.get_inv_view() * mouse;
                 
+                mouse = mouse / 2.0f / mouse.w;
+
                 std::cout << "CUR_POS (X, Z): " << current_position.x << ", " << current_position.y << std::endl;
-                std::cout << "Mouse Position (X, Y): "<< event.motion.x << ", "<< event.motion.y << ", " << mouse.x << ", " << mouse.y << std::endl;
+                std::cout << "Mouse Position (X, Y): "<< mouse.x << ", "<< mouse.y << ", " << mouse.z << ", " << mouse.w << std::endl;
                 std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.y - event.motion.y << std::endl;
 
                 player->set_position(mouse.x, mouse.y, 0.0f);
