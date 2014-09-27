@@ -86,7 +86,9 @@ void game(renderer& r) {
                 // get the vector from the players current position
                 current_position = player->get_position();
                 
-                std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.z - event.motion.y;
+                std::cout << "CUR_POS (X, Z): " << current_position.x << ", " << current_position.y << std::endl;
+                std::cout << "Mouse Position (X, Y): " << event.motion.x << ", " << event.mouse.y << std::endl;
+                std::cout << "Difference (X, Z): " << current_position.x - event.motion.x << ", " << current_position.z - event.motion.y << std::endl;
 
                 player->move(
                     current_position.x - event.motion.x,
