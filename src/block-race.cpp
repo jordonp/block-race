@@ -84,11 +84,11 @@ void game(renderer& r) {
 
                 // get the vector from the players current position
                 glm::vec3 current_position;
-                current_positon = player->get_position();
+                current_position = player->get_position();
                 
                 player->move(
-                    current_positon.x - event.motion.x,
-                    current_positon.y - event.motion.y, 0.0f);
+                    current_position.x - event.motion.x,
+                    current_position.y - event.motion.y, 0.0f);
                 
                 // player->yaw((center_x - event.motion.x)/10.0f);
                 // player->pitch(-(center_y - event.motion.y)/10.0f);
