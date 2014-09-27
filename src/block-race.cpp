@@ -11,7 +11,7 @@ void game(renderer& r) {
     // Disable the cursor
     // SDL_ShowCursor(SDL_DISABLE);
 
-    float cam_height = 20.0f;
+    float cam_height = 40.0f;
 
     game_object* player;
     level l;
@@ -55,7 +55,9 @@ void game(renderer& r) {
     center_y /= 2;
     glm::vec3 current_position;
     glm::vec4 mouse;
-
+    glm::mat4 inv_view = l.view.get_inv_view();
+    float angY = 0.0f;
+    float angX = 0.0f;
 
     while ( !quit ) {      
         while( SDL_PollEvent( &event ) ){
@@ -90,14 +92,16 @@ void game(renderer& r) {
 
                 // get the vector from the players current position
                 current_position = player->get_position();
-                mouse = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+                mouse = glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
                 mouse.x = event.motion.x / (float)center_x - 1.0f;
                 mouse.y = (event.motion.y / (float)center_y - 1.0f) * -1.0f;
-                glReadPixels(event.motion.x, event.motion.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &mouse.z);
+                mouse =  inv_view * mouse;
+                mouse = mouse / mouse.w;
+                angY = atan(mouse.y / (cam_height - mouse.z));
+                angX = atan(mouse.x / (cam_height - mouse.z));
 
-                mouse =  l.view.get_inv_view() * mouse;
-                
-                mouse = mouse / 2.0f / mouse.w;
+                mouse.y = tan(angY) * cam_height;
+                mouse.x = tan(angX) * cam_height;
 
                 std::cout << "CUR_POS (X, Z): " << current_position.x << ", " << current_position.y << std::endl;
                 std::cout << "Mouse Position (X, Y): "<< mouse.x << ", "<< mouse.y << ", " << mouse.z << ", " << mouse.w << std::endl;
